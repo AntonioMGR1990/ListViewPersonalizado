@@ -98,14 +98,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
 
-        View v = convertView;
+        //View Holder pattern
+        ViewHolder holder;
+        if(convertView ==null){
+            LayoutInflater layoutInflater = LayoutInflater.from(this.context);
+            convertView = layoutInflater.inflate(R.layout.list_item,null);
 
-        LayoutInflater layoutInflater = LayoutInflater.from(this.context);
-        v = layoutInflater.inflate(R.layout.list_item,null);
+            holder = new ViewHolder();
+            holder.nameTextView = convertView.findViewById(R.id.textView);
+            convertView.setTag(holder);
+        }else{
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+
+
         String nombre = names.get(i);
-        TextView textView = v.findViewById(R.id.textView);
+        TextView textView = convertView.findViewById(R.id.textView);
         textView.setText(nombre);
-        return v;
+        return convertView;
+    }
+    static class ViewHolder{
+        private TextView nameTextView;
     }
 }
 
